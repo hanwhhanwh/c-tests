@@ -7,8 +7,8 @@ This is an example demonstrating how to use OpenSSL in order to implement an DTS
 Make sure that libssl can be found by your compiling environment, e. g. by installing necessary packages:
 
 ```
-apt-get update
-apt-get install build-essential libssl-dev openssl stunnel
+sudo apt update
+sudo apt install build-essential libssl-dev openssl stunnel
 ```
 
 After that, enjoy the compilation process:
