@@ -10,33 +10,6 @@
 #include "utils.h"
 
 
-#if WIN32
-static HANDLE* mutex_buf = NULL;
-#else
-static pthread_mutex_t* mutex_buf = NULL;
-#endif
-
-static void locking_function(int mode, int n, const char *file, int line) {
-	if (mode & CRYPTO_LOCK)
-#ifdef WIN32
-		WaitForSingleObject(mutex_buf[n], INFINITE);
-	else
-		ReleaseMutex(mutex_buf[n]);
-#else
-		pthread_mutex_lock(&mutex_buf[n]);
-	else
-		pthread_mutex_unlock(&mutex_buf[n]);
-#endif
-}
-
-static unsigned long id_function(void) {
-#ifdef WIN32
-	return (unsigned long) GetCurrentThreadId();
-#else
-	return (unsigned long) pthread_self();
-#endif
-}
-
 int THREAD_setup() {
 	int i;
 

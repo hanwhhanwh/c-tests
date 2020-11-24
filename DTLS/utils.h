@@ -31,10 +31,6 @@
 #define COOKIE_SECRET_LENGTH 16
 
 
-static void locking_function(int mode, int n, const char *file, int line);
-
-static unsigned long id_function(void);
-
 int THREAD_setup();
 
 int THREAD_cleanup();
