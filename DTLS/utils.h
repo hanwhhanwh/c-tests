@@ -31,13 +31,6 @@
 #define COOKIE_SECRET_LENGTH 16
 
 
-
-#if WIN32
-static HANDLE* mutex_buf = NULL;
-#else
-static pthread_mutex_t* mutex_buf = NULL;
-#endif
-
 static void locking_function(int mode, int n, const char *file, int line);
 
 static unsigned long id_function(void);
