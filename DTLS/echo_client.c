@@ -364,10 +364,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	if (argc == 1)
-		start_client(*argv, local_addr, port, length, messagenumber);
-	else
-		start_server(port, local_addr);
+	start_client(*argv, local_addr, port, length, messagenumber);
 
 	return 0;
 
