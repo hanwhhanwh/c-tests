@@ -31,10 +31,6 @@
 #define COOKIE_SECRET_LENGTH 16
 
 
-int THREAD_setup();
-
-int THREAD_cleanup();
-
 int handle_socket_error();
 
 
