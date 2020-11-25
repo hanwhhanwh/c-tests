@@ -470,9 +470,9 @@ void start_server(int port, char *local_address) {
 	} server_addr, client_addr;
 #if WIN32
 	WSADATA wsaData;
-	DWORD tid;
+	DWORD thread_id;
 #else
-	pthread_t tid;
+	pthread_t thread_id;
 #endif
 	SSL_CTX *ctx;
 	SSL *ssl;
@@ -588,11 +588,11 @@ void start_server(int port, char *local_address) {
 		info->ssl = ssl;
 
 #ifdef WIN32
-		if (CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) connection_handle, info, 0, &tid) == NULL) {
+		if (CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) connection_handle, info, 0, &thread_id) == NULL) {
 			exit(-1);
 		}
 #else
-		if (pthread_create( &tid, NULL, connection_handle, info) != 0) {
+		if (pthread_create( &thread_id, NULL, connection_handle, info) != 0) {
 			perror("pthread_create");
 			exit(-1);
 		}
