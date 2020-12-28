@@ -1,0 +1,12 @@
+openssl_conf = openssl_def
+
+[openssl_def]
+engines = engine_section
+
+[engine_section]
+sample = sample_section
+
+[sample_section]
+engine_id = sample
+dynamic_path = /path/to/sample_engine.so
+init = 0
