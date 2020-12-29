@@ -7,8 +7,9 @@ LIBS        = -lssl -lcrypto -pthread -lm -ldl
 RM= rm -f
 
 
-all: sample_engine sample_engine.so
+all: sample md5
 
+sample: sample_engine sample_engine.so
 
 sample_engine: sample_engine.c
 	$(CC) $(CFLAGS) $(INCLUDES) sample_engine.c $(LIBS)
@@ -16,6 +17,19 @@ sample_engine: sample_engine.c
 sample_engine.so: sample_engine.o
 	$(CC) -shared -o sample_engine.so sample_engine.o
 
+
+md5: md5_engine md5_engine.so
+
+md5_engine: md5_engine.c rfc1321/md5.c
+	$(CC) $(CFLAGS) $(INCLUDES) md5_engine.c $(LIBS)
+	$(CC) $(CFLAGS) $(INCLUDES) rfc1321/md5.c -o rfc1321/md5.o $(LIBS)
+
+md5_engine.so: md5_engine.o
+	$(CC) -shared -lcrypto -o md5_engine.so md5_engine.o rfc1321/md5.o
+
 clean:
 	$(RM) sample_engine.o
 	$(RM) sample_engine.so
+	$(RM) md5_engine.o
+	$(RM) md5_engine.so
+	$(RM) rfc1321/md5.o
