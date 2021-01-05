@@ -5,6 +5,7 @@
  * reference : https://www.openssl.org/docs/man1.0.2/man3/EVP_md5.html
  * build : gcc hash_test.c -o hash_test
  */
+#include <stdio.h>
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 #include <openssl/objects.h>
