@@ -3,7 +3,8 @@
  * @author hbesthee@naver.com
  * @date 2021-01-05
  * reference : https://www.openssl.org/docs/man1.0.2/man3/EVP_md5.html
- * build : gcc hash_test.c -o hash_test
+ * build : gcc hash_test.c -o hash_test -I/usr/local/ssl/include -L/usr/local/ssl/lib -lssl -lcrypto -pthread -lm -ldl
+ * run : hash_test md5 / hash_test sha256
  */
 #include <stdio.h>
 #include <openssl/crypto.h>
