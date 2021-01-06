@@ -3,6 +3,14 @@
  * @author hbesthee@naver.com
  * @date 2021-01-06
  * @reference : e_ossltest.c (OpenSSL test source)
+ * run : # echo whatever | openssl dgst -engine `pwd`/sha256_engine.so -sha256
+ * result >>
+engine "SHA256" set.
+digest_sha256_init
+digest_sha256_update = 9 : whatever
+
+digest_sha256_final
+(stdin)= 4141414141414141414141414141414141414141414141414141414141414141
  */
 #include <stdio.h>
 #include <string.h>
