@@ -13,14 +13,18 @@
 #include "utils.h"
 
 
+#define	CIPHERS_LEN	1024
+
 int verbose = 0;
 int veryverbose = 0;
 unsigned char cookie_secret[COOKIE_SECRET_LENGTH];
 int cookie_initialized=0;
+static char _ciphers[CIPHERS_LEN+1];
 
 char Usage[] =
 "Usage: dtls_udp_echo [options] [address]\n"
 "Options:\n"
+"        -c      cipher suits\n"
 "        -l      message length (Default: 100 Bytes)\n"
 "        -L      local address\n"
 "        -p      port (Default: 23232)\n"
@@ -111,7 +115,8 @@ void start_client(char *remote_address, char *local_address, int port, int lengt
 	OpenSSL_add_ssl_algorithms();
 	SSL_load_error_strings();
 	ctx = SSL_CTX_new(DTLS_client_method());
-	SSL_CTX_set_cipher_list(ctx, "ARIA:SHA256");
+	if (strlen(_ciphers) > 0)
+		SSL_CTX_set_cipher_list(ctx, _ciphers);
 
 	if (!SSL_CTX_use_certificate_file(ctx, "certs/client-cert.pem", SSL_FILETYPE_PEM))
 		printf("\nERROR: no certificate found!");
@@ -327,6 +332,10 @@ int main(int argc, char **argv)
 		else if	(strcmp(*argv, "-p") == 0) {
 			if (--argc < 1) goto cmd_err;
 			port = atoi(*++argv);
+		}
+		else if	(strcmp(*argv, "-c") == 0) {
+			if (--argc < 1) goto cmd_err;
+			strncpy(_ciphers, *++argv, CIPHERS_LEN);
 		}
 		else if	(strcmp(*argv, "-v") == 0) {
 			verbose = 1;
