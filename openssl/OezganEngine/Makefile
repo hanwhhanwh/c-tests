@@ -1,7 +1,7 @@
 
 CFLAGS      = -c -fpic
-INCLUDES    = -I/usr/local/ssl/include
-LFLAGS      = -L/usr/local/ssl/lib
+INCLUDES    = -I/usr/local/include
+LFLAGS      = -L/usr/local/lib
 LIBS        = -lssl -lcrypto -pthread -lm -ldl
 
 RM= rm -f
