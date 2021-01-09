@@ -1,7 +1,7 @@
 
 CFLAGS      = -c -fpic
-INCLUDES    = -I/usr/local/ssl/include
-LFLAGS      = -L/usr/local/ssl/lib
+INCLUDES    = -I/usr/local/include
+LFLAGS      = -L/usr/local/lib
 LIBS        = -lssl -lcrypto -pthread -lm -ldl
 
 RM= rm -f
@@ -28,7 +28,7 @@ md5_engine.so: md5_engine.o
 	$(CC) -shared -lcrypto -o md5_engine.so md5_engine.o rfc1321/md5.o
 
 md5_tester: md5test.c
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) md5_tester.c
+	$(CC) -o md5_tester $(INCLUDES) $(LIBS) md5_tester.c
 
 
 sha256: sha256_engine.o sha256_engine.so
