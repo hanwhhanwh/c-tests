@@ -18,7 +18,7 @@ sample_engine.so: sample_engine.o
 	$(CC) -shared -o sample_engine.so sample_engine.o
 
 
-md5: md5_engine md5_engine.so md5_tester md5_test2
+md5: md5_engine md5_engine.so md5_tester md_test
 
 md5_engine: md5_engine.c rfc1321/md5.c
 	$(CC) md5_engine.c $(CFLAGS) $(INCLUDES) $(LIBS)
@@ -30,8 +30,8 @@ md5_engine.so: md5_engine.o
 md5_tester: md5_tester.c
 	$(CC) md5_tester.c -o md5_tester $(INCLUDES) $(LFLAGS) $(LIBS)
 
-md5_test2: md5_test2.c
-	$(CC) md5_test2.c -o md5_test2 $(INCLUDES) $(LFLAGS) $(LIBS)
+md_test: md_test.c
+	$(CC) md_test.c -o md_test $(INCLUDES) $(LFLAGS) $(LIBS)
 
 
 sha256: sha256_engine.o sha256_engine.so
