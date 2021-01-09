@@ -28,10 +28,10 @@ md5_engine.so: md5_engine.o
 	$(CC) -shared -lcrypto -o md5_engine.so md5_engine.o rfc1321/md5.o
 
 md5_tester: md5_tester.c
-	$(CC) md5_tester.c -o md5_tester $(INCLUDES) $(LIBS)
+	$(CC) md5_tester.c -o md5_tester $(INCLUDES) $(LFLAGS) $(LIBS)
 
 md5_test2: md5_test2.c
-	$(CC) md5_test2.c -o md5_test2 $(INCLUDES) $(LIBS)
+	$(CC) md5_test2.c -o md5_test2 $(INCLUDES) $(LFLAGS) $(LIBS)
 
 
 sha256: sha256_engine.o sha256_engine.so
