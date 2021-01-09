@@ -4,16 +4,17 @@
  * @author : hbesthee@naver.com
  * 참고: https://0x616b616d61.tistory.com/entry/Linux-C-md5-hash-생성-openssl-이용
  */
+#include <stdio.h>
 #include <openssl/md5.h> // for generate md5 hash
  
 
-void get_MD5(unsigned char* digest, char *strMsg)
+int get_MD5(unsigned char* digest, char *strMsg)
 {
 	MD5_CTX context;
 
 	MD5_Init(&context);
 	MD5_Update(&context, strMsg, strlen(strMsg));
-	MD5_Final(digest, &context);
+	return MD5_Final(digest, &context);
 }
  
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
 	}
 
 	ret = get_MD5(digest, argv[1]);
+	printf("ret = %d\n", ret);
 	if (ret == 0)
 	{ // 결과를 출력합니다.
 		printf("MD5 = ");
