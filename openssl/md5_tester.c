@@ -13,7 +13,7 @@ void get_MD5(unsigned char* digest, char *strMsg)
 
 	MD5_Init(&context);
 	MD5_Update(&context, strMsg, strlen(strMsg));
-	MD5_Final(digest, &context)
+	MD5_Final(digest, &context);
 }
  
 
@@ -23,7 +23,7 @@ void print_usage()
 }
 
 
-int main(int argc, chat *argv[])
+int main(int argc, char *argv[])
 {
 	unsigned char digest[MD5_DIGEST_LENGTH]; // #define MD5_DIGEST_LENGTH    16
 	int index = 0, ret = 0;
