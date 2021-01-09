@@ -29,12 +29,12 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	mdctx = EVP_MD_CTX_new();
+	mdctx = EVP_MD_CTX_create();
 	EVP_DigestInit_ex(mdctx, md, NULL);
 	EVP_DigestUpdate(mdctx, mess1, strlen(mess1));
 	EVP_DigestUpdate(mdctx, mess2, strlen(mess2));
 	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
-	EVP_MD_CTX_free(mdctx);
+	EVP_MD_CTX_destroy(mdctx);
 
 	printf("Digest is: ");
 	for (i = 0; i < md_len; i++)
