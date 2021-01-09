@@ -27,7 +27,7 @@ md5_engine: md5_engine.c rfc1321/md5.c
 md5_engine.so: md5_engine.o
 	$(CC) -shared -lcrypto -o md5_engine.so md5_engine.o rfc1321/md5.o
 
-md5_tester: md5test.c
+md5_tester: md5_tester.c
 	$(CC) -o md5_tester $(INCLUDES) $(LIBS) md5_tester.c
 
 
