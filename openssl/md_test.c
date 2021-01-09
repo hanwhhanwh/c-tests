@@ -2,7 +2,7 @@
  * MD engine test
  * @date : 2021-01-09
  * @author : hbesthee@naver.com
- * 참고: https://blog.naver.com/websearch/222143993215
+ * 참고: https://www.openssl.org/docs/man1.1.1/man3/EVP_DigestInit.html
 
 TEST
 
@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
 	char mess2[] = "Hello World\n";
 	unsigned char md_value[EVP_MAX_MD_SIZE];
 	unsigned int md_len, i;
+
+	OpenSSL_add_ssl_algorithms();
+	SSL_load_error_strings();
 
 	// Load all bundled ENGINEs into memory and make them visible
 	ENGINE_load_builtin_engines();
