@@ -31,14 +31,15 @@ int main(int argc, char *argv[])
 	char mess2[] = "Hello World\n";
 	unsigned char md_value[EVP_MAX_MD_SIZE];
 	unsigned int md_len, i;
+	int ret
 
 	if (argv[1] == NULL) {
 		printf("Usage: %s digestname\n", argv[0]);
 		exit(1);
 	}
 
-	OpenSSL_add_ssl_algorithms();
-	SSL_load_error_strings();
+	// OpenSSL_add_ssl_algorithms();
+	// SSL_load_error_strings();
 
 	// Load all bundled ENGINEs into memory and make them visible
 	ENGINE_load_builtin_engines();
@@ -48,17 +49,17 @@ int main(int argc, char *argv[])
 	e = ENGINE_by_id(engine_id);
 	if (!e)
 		// the engine isn't available
-		return;
+		return 1;
 	if (!ENGINE_init(e)) {
 		// the engine couldn't initialise, release 'e'
 		ENGINE_free(e);
-		return;
+		return 1;
 	}
 
-	ret = ENGINE_set_default(e);
+	ret = ENGINE_set_default_digests(e);
 	if (ret == 0)
 	{
-		printf("ENGINE_set_default() fail!\n", argv[1]);
+		printf("ENGINE_set_default_digests() fail!\n");
 		exit(1);
 	}
 
