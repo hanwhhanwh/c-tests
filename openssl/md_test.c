@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
 	// Register all of them for every algorithm they collectively implement
 	ENGINE_register_all_complete();
 
+	ENGINE_load_dynamic();
+
 	e = ENGINE_by_id(engine_id);
 	if (!e) {
 		printf("ENGINE_by_id() fail!\n");
@@ -73,7 +75,7 @@ int main(int argc, char *argv[])
 	}
 
 	mdctx = EVP_MD_CTX_new();
-	EVP_DigestInit_ex(mdctx, md, NULL);
+	EVP_DigestInit_ex(mdctx, md, e);
 	EVP_DigestUpdate(mdctx, mess1, strlen(mess1));
 	EVP_DigestUpdate(mdctx, mess2, strlen(mess2));
 	EVP_DigestFinal_ex(mdctx, md_value, &md_len);
