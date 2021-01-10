@@ -3,8 +3,9 @@
  * @date : 2021-01-09
  * @author : hbesthee@naver.com
  * 참고: https://www.openssl.org/docs/man1.1.1/man3/EVP_DigestInit.html
+https://www.openssl.org/docs/man1.1.1/man3/ENGINE_register_all_ciphers.html
 
-TEST
+TEST :
 
 # ./md_test md5
 Digest is: ce73931d2b3da6e60bf18af27494c6cd
@@ -15,16 +16,26 @@ Digest is: 318b20b83a6730b928c46163a2a1cefee4466132731c95c39613acb547ccb715
 #include <string.h>
 #include <openssl/engine.h>
 #include <openssl/evp.h>
+#include <openssl/ssl.h>
+#include <openssl/bio.h>
+#include <openssl/err.h>
 
 
 int main(int argc, char *argv[])
 {
+	ENGINE *e;
+	const char *engine_id = "MD5";
 	EVP_MD_CTX *mdctx;
 	const EVP_MD *md;
 	char mess1[] = "Test Message\n";
 	char mess2[] = "Hello World\n";
 	unsigned char md_value[EVP_MAX_MD_SIZE];
 	unsigned int md_len, i;
+
+	if (argv[1] == NULL) {
+		printf("Usage: %s digestname\n", argv[0]);
+		exit(1);
+	}
 
 	OpenSSL_add_ssl_algorithms();
 	SSL_load_error_strings();
@@ -34,8 +45,20 @@ int main(int argc, char *argv[])
 	// Register all of them for every algorithm they collectively implement
 	ENGINE_register_all_complete();
 
-	if (argv[1] == NULL) {
-		printf("Usage: %s digestname\n", argv[0]);
+	e = ENGINE_by_id(engine_id);
+	if (!e)
+		// the engine isn't available
+		return;
+	if (!ENGINE_init(e)) {
+		// the engine couldn't initialise, release 'e'
+		ENGINE_free(e);
+		return;
+	}
+
+	ret = ENGINE_set_default(e);
+	if (ret == 0)
+	{
+		printf("ENGINE_set_default() fail!\n", argv[1]);
 		exit(1);
 	}
 
