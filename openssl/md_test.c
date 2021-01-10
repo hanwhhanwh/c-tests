@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
 	ENGINE_register_all_complete();
 
 	e = ENGINE_by_id(engine_id);
-	if (!e) {}
+	if (!e) {
 		printf("ENGINE_by_id() fail!\n");
 		// the engine isn't available
 		return 1;
-}
+	}
 	if (!ENGINE_init(e)) {
 		// the engine couldn't initialise, release 'e'
 		printf("ENGINE_init() fail!\n");
