@@ -4,9 +4,21 @@ openssl_conf = openssl_def
 engines = engine_section
 
 [engine_section]
-sample = sample_section
+#sample = sample_section
+md5 = md5_section
+sha256 = sha256_section
 
 [sample_section]
 engine_id = sample
 dynamic_path = /path/to/sample_engine.so
+init = 0
+
+[md5_section]
+engine_id = md5
+dynamic_path = /usr/local/lib/engines-1.1/md5_engine.so
+init = 0
+
+[sha256_section]
+engine_id = sha256
+dynamic_path = /usr/local/lib/engines-1.1/sha256_engine.so
 init = 0

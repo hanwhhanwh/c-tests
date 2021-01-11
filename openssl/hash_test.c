@@ -34,6 +34,7 @@ void main(int argc, char *argv[])
 		printf("Unknown message digest %s\n", argv[1]);
 		exit(1);
 	}
+	printf("Message digest EVP_MD size = %d\n", sizeof(EVP_MD));
 
 	mdctx = EVP_MD_CTX_create();
 	EVP_DigestInit_ex(mdctx, md, NULL);
