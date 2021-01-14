@@ -27,14 +27,14 @@ static int str_to_buf(unsigned char *buf, const char *str)
 	int index = 0;
 	for ( ; index < str_len ; index ++)
 	{
-		buf[count] = (str[index] >= '0' && str[index] <= '9') ? str[index] - '0' : (str[index] | 0x20) - 'a' + 10;
+		buf[count] = ((str[index] >= '0' && str[index] <= '9') ? str[index] - '0' : (str[index] | 0x20) - 'a' + 10) << 4;
 		index++;
-		if ( index < str_len )
+		if ( index >= str_len )
 		{
 			buf[count] = 0;
 			break;
 		}
-		buf[count] |= ((str[index] >= '0' && str[index] <= '9') ? str[index] - '0' : (str[index] | 0x20) - 'a' + 10) << 4;
+		buf[count] |= (str[index] >= '0' && str[index] <= '9') ? str[index] - '0' : (str[index] | 0x20) - 'a' + 10;
 		count ++;
 	}
 	return count;
@@ -46,7 +46,10 @@ int main(int argc, char *argv[])
 	unsigned char buf[512];
 	int count;
 
-	count = str_to_buf(buf, "aabbccddee");
+	if (argc > 1)
+		count = str_to_buf(buf, argv[1]);
+	else
+		count = str_to_buf(buf, "aabbccddee");
 	printf("count = %d, ", count);
 	print_ptr("buf = ", buf, count);
 }
