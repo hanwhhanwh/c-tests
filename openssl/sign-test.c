@@ -23,25 +23,25 @@ int main(int argc, char *argv[])
 	ECDSA_SIG *sig;
 	EC_KEY    *eckey;
 	unsigned char digest[512];
-	int dgstlen;
+	int dgstlen = 32;
 
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
 	if (eckey == NULL)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 	if (EC_KEY_generate_key(eckey) == 0)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
 	if (sig == NULL)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 
 	unsigned char *buffer, *pp;
@@ -53,19 +53,19 @@ int main(int argc, char *argv[])
 	if (ECDSA_sign(0, digest, dgstlen, pp, &buf_len, eckey) == 0)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 
 	ret = ECDSA_do_verify(digest, 32, sig, eckey);
 	if (ret == 0)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 	ret = ECDSA_verify(0, digest, 32, buffer, buf_len, eckey);
 	if (ret == 0)
 	{
 		/* error */
-		printf("error %d", __LINE__);
+		printf("error %d\n", __LINE__);
 	}
 }
