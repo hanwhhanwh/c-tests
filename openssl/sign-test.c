@@ -46,9 +46,10 @@ int main(int argc, char *argv[])
 	ret = i2d_ECPrivateKey(eckey, priv_der);
 	if (ret == 0)
 	{
+		printf("error %d", __LINE__);
 		ret = ERR_get_error();
 		ERR_error_string_n(ret, err_msg, 512);
-		printf("error %d : %s\n", __LINE__, err_msg);
+		printf(" : %d = %s\n", ret, err_msg);
 		return __LINE__;
 	}
 	DEBUG_PTR("priv_der", *priv_der, ret);
