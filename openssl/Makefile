@@ -7,7 +7,7 @@ LIBS        = -lssl -lcrypto -pthread -lm -ldl
 RM= rm -f
 
 
-all: sample md5 sha256
+all: sample md5 sha256 sign
 
 sample: sample_engine sample_engine.so
 
@@ -42,6 +42,11 @@ sha256_engine.o: sha256_engine.c
 sha256_engine.so: sha256_engine.o
 	$(CC) -shared -lcrypto -o sha256_engine.so sha256_engine.o
 
+
+sign: sign-test.o
+
+sign-test.o: sign-test.c
+	$(CC) sign-test.c -o sign-test $(INCLUDES) $(LFLAGS) $(LIBS)
 
 clean:
 	$(RM) sample_engine.o
