@@ -72,6 +72,13 @@ int main(int argc, char *argv[])
 	DEBUG_MSG("pub_data = %s\n", pub_data);
 	BN_CTX_free(ctx);
 
+	int nSize = i2o_ECPublicKey(pkey, NULL);
+	DEBUG_MSG("pub key need buf = %d\n", nSize);
+	unsigned char pub_key_buf[512];
+	unsigned char *ptr_pub_key = &pub_key_buf[0];
+	nSize = i2o_ECPublicKey(pkey, &ptr_pub_key);
+	DEBUG_PTR("ptr_pub_key", ptr_pub_key, nSize);
+
 	ECParameters_print_fp(stdout, eckey);
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
