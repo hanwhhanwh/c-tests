@@ -29,19 +29,19 @@ int main(int argc, char *argv[])
 	if (eckey == NULL)
 	{
 		/* error */
-		print("error %d", __LINE__);
+		printf("error %d", __LINE__);
 	}
 	if (EC_KEY_generate_key(eckey) == 0)
 	{
 		/* error */
-		print("error %d", __LINE__);
+		printf("error %d", __LINE__);
 	}
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
 	if (sig == NULL)
 	{
 		/* error */
-		print("error %d", __LINE__);
+		printf("error %d", __LINE__);
 	}
 
 	unsigned char *buffer, *pp;
