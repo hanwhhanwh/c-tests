@@ -17,6 +17,9 @@ TEST :
 #include <openssl/err.h>
 
 
+#include "debug_utils.h"
+
+
 int main(int argc, char *argv[])
 {
 	int        ret;
@@ -30,11 +33,13 @@ int main(int argc, char *argv[])
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
 	if (EC_KEY_generate_key(eckey) == 0)
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
@@ -42,30 +47,39 @@ int main(int argc, char *argv[])
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
+	DEBUG_PTR("digest", digest, dgstlen);
 
 	unsigned char *buffer, *pp;
 	int buf_len;
 
 	buf_len = ECDSA_size(eckey);
 	buffer = OPENSSL_malloc(buf_len);
+	DEBUG_PTR("buffer", buffer, buf_len);
 	pp = buffer;
 	if (ECDSA_sign(0, digest, dgstlen, pp, &buf_len, eckey) == 0)
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
+	DEBUG_PTR("digest2", digest, dgstlen);
 
 	ret = ECDSA_do_verify(digest, 32, sig, eckey);
 	if (ret == 0)
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
+	DEBUG_MSG("ECDSA_do_verify ret = %d\n", ret);
 	ret = ECDSA_verify(0, digest, 32, buffer, buf_len, eckey);
 	if (ret == 0)
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
 	}
+	DEBUG_MSG("ECDSA_verify ret = %d\n", ret);
 }
