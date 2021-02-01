@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
 	EC_KEY    *eckey;
 	unsigned char digest[512];
 	unsigned char err_msg[512];
+	unsigned char **perr_msg = &err_msg;
 	int dgstlen = 32;
 
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
 	if (ret == 0)
 	{
 		ret = ERR_get_error();
-		ERR_error_string_n(ret, err_msg, 512);
+		ERR_error_string_n(ret, perr_msg, 512);
 		printf("error %d : %s\n", __LINE__, err_msg);
 		return __LINE__;
 	}
