@@ -33,6 +33,9 @@ int main(int argc, char *argv[])
 	const BIGNUM *priv_key;
 	const EC_POINT *pub_key = NULL;
 
+	for (ret = 0 ; ret < 32 ; ret ++)
+		digest[ret] = ret;
+
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
 	if (eckey == NULL)
 	{
@@ -66,9 +69,10 @@ int main(int argc, char *argv[])
 	BN_CTX *ctx = NULL;
 	ctx = BN_CTX_new();
 	unsigned char *pub_data = EC_POINT_point2hex(group, pub_key, POINT_CONVERSION_UNCOMPRESSED, ctx);
-	DEBUG_MSG("pub_data = %s", pub_data);
+	DEBUG_MSG("pub_data = %s\n", pub_data);
 	BN_CTX_free(ctx);
 
+	ECParameters_print_fp(stdout, eckey);
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
 	if (sig == NULL)
