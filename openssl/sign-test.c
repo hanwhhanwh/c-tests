@@ -79,6 +79,16 @@ int main(int argc, char *argv[])
 	nSize = i2o_ECPublicKey(eckey, &ptr_pub_key);
 	DEBUG_PTR("ptr_pub_key", ptr_pub_key, nSize);
 
+    BIGNUM *x = BN_new();
+    BIGNUM *y = BN_new();
+
+    if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL)) {
+        BN_print_fp(stdout, x);
+        putc('\n', stdout);
+        BN_print_fp(stdout, y);
+        putc('\n', stdout);
+    }
+
 	ECParameters_print_fp(stdout, eckey);
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
