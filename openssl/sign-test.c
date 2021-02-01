@@ -51,9 +51,21 @@ int main(int argc, char *argv[])
 	buffer = OPENSSL_malloc(buf_len);
 	pp = buffer;
 	if (ECDSA_sign(0, digest, dgstlen, pp, &buf_len, eckey) == 0)
+	{
 		/* error */
+		printf("error %d", __LINE__);
+	}
 
 	ret = ECDSA_do_verify(digest, 32, sig, eckey);
-
+	if (ret == 0)
+	{
+		/* error */
+		printf("error %d", __LINE__);
+	}
 	ret = ECDSA_verify(0, digest, 32, buffer, buf_len, eckey);
+	if (ret == 0)
+	{
+		/* error */
+		printf("error %d", __LINE__);
+	}
 }
