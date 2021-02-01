@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 	unsigned char err_msg[512];
 	unsigned char **priv_der;
 	int dgstlen = 32;
+	const BIGNUM *priv_key;
 
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
 	if (eckey == NULL)
@@ -43,18 +44,21 @@ int main(int argc, char *argv[])
 		printf("error %d\n", __LINE__);
 		return __LINE__;
 	}
-	*priv_der = malloc(512);
-	ret = i2d_ECPrivateKey(eckey, priv_der);
-	if (ret == 0)
-	{
-		printf("error %d", __LINE__);
-		ret = ERR_get_error();
-		ERR_error_string_n(ret, err_msg, 512);
-		printf(" : %d = %s\n", ret, err_msg);
-		return __LINE__;
-	}
-	DEBUG_PTR("priv_der", *priv_der, ret);
-	free(*priv_der);
+	// *priv_der = malloc(512);
+	// ret = i2d_ECPrivateKey(eckey, priv_der);
+	// if (ret == 0)
+	// {
+	// 	printf("error %d", __LINE__);
+	// 	ret = ERR_get_error();
+	// 	ERR_error_string_n(ret, err_msg, 512);
+	// 	printf(" : %d = %s\n", ret, err_msg);
+	// 	return __LINE__;
+	// }
+	// DEBUG_PTR("priv_der", *priv_der, ret);
+	// free(*priv_der);
+	priv_key = EC_KEY_get0_private_key(eckey);
+	DEBUG_BIGNUM2("priv_key", priv_key);
+
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
 	if (sig == NULL)
