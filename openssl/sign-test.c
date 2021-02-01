@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 		printf("error %d\n", __LINE__);
 		return __LINE__;
 	}
+	*priv_der = malloc(512);
 	ret = i2d_ECPrivateKey(eckey, priv_der);
 	if (ret == 0)
 	{
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
 		return __LINE__;
 	}
 	DEBUG_PTR("priv_der", *priv_der, ret);
+	free(*priv_der);
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
 	if (sig == NULL)
