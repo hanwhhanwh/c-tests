@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 	ECDSA_SIG *sig;
 	EC_KEY    *eckey;
 	unsigned char digest[512];
+	unsigned char err_msg[512];
 	int dgstlen = 32;
 
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
@@ -39,6 +40,14 @@ int main(int argc, char *argv[])
 	{
 		/* error */
 		printf("error %d\n", __LINE__);
+		return __LINE__;
+	}
+	ret = i2d_ECPrivateKey(eckey, &digest);
+	if (ret == 0)
+	{
+		ret = ERR_get_error();
+		ERR_error_string_n(ret, err_msg, 512);
+		printf("error %d : %s\n", __LINE__, err_msg);
 		return __LINE__;
 	}
 
