@@ -29,7 +29,9 @@ int main(int argc, char *argv[])
 	unsigned char err_msg[512];
 	unsigned char **priv_der;
 	int dgstlen = 32;
+	const EC_GROUP *group;
 	const BIGNUM *priv_key;
+	const EC_POINT *pub_key = NULL;
 
 	eckey = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
 	if (eckey == NULL)
@@ -56,8 +58,16 @@ int main(int argc, char *argv[])
 	// }
 	// DEBUG_PTR("priv_der", *priv_der, ret);
 	// free(*priv_der);
+	group = EC_KEY_get0_group(eckey);
 	priv_key = EC_KEY_get0_private_key(eckey);
 	DEBUG_BIGNUM2("priv_key", priv_key);
+
+	pub_key = EC_KEY_get0_public_key(eckey);
+	BN_CTX *ctx = NULL;
+	ctx = BN_CTX_new();
+	unsigned char *pub_data = EC_POINT_point2hex(group, pub_key, POINT_CONVERSION_UNCOMPRESSED, ctx);
+	DEBUG_MSG("pub_data = %s", pub_data);
+	BN_CTX_free(ctx);
 
 
 	sig = ECDSA_do_sign(digest, 32, eckey);
