@@ -40,6 +40,7 @@
 			fprintf(stdout, "  [%05d] BIGNUM is NULL", __LINE__);	\
 			break;													\
 		}															\
+		int len = BN_num_bytes(bn);									\
 		fprintf(stdout, "  [%05d] BIGNUM ", __LINE__);				\
 		fprintf(stdout, "%s = [%d] ", strMsg, len);					\
 		BN_print_fp(stdout, bn);									\
