@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	DEBUG_BIGNUM("priv_key", priv_key);
 
 	int privlen; unsigned char *priv = NULL;
-	privlen = EC_KEY_priv2buf(x, &priv);
+	privlen = EC_KEY_priv2buf(eckey, &priv);
 	DEBUG_PTR("priv", priv, privlen);
 	OPENSSL_clear_free(priv, privlen);
 
