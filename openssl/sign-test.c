@@ -22,7 +22,7 @@ TEST :
 
 int main(int argc, char *argv[])
 {
-	int        ret;
+	int        ret, len;
 	ECDSA_SIG *sig;
 	EC_KEY    *eckey;
 	unsigned char digest[512];
@@ -83,8 +83,9 @@ int main(int argc, char *argv[])
     BIGNUM *y = BN_new();
 
 	BN_dec2bn(&x, "1024");
+	len = BN_bn2bin(x, NULL);
 	DEBUG_BIGNUM("1024", x);
-	ret = BN_bn2lebinpad(x, digest, 8);
+	ret = BN_bn2lebinpad(x, digest, len);
 	DEBUG_PTR("1024 ptr", digest, ret);
 
 	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
