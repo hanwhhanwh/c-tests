@@ -36,6 +36,6 @@ int main(int argc, char *argv[])
 	DEBUG_PTR("buf", buf, 16);
 	revers_buf(buf, 8);
 	DEBUG_PTR("buf", buf, 8);
-	revers_buf(buf, 4);
+	revers_buf(buf, 5);
 	DEBUG_PTR("buf", buf, 8);
 }
