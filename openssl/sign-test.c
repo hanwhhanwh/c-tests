@@ -87,7 +87,10 @@ int main(int argc, char *argv[])
 	DEBUG_BIGNUM("1024", x);
 	len = BN_num_bytes(x);
 	ret = BN_bn2lebinpad(x, digest, len);
-	DEBUG_PTR("1024 ptr", digest, ret);
+	DEBUG_PTR("1024 to BN_bn2lebinpad", digest, ret);
+	char *big_num = BN_bn2hex(x);
+	DEBUG_PTR("1024 to BN_bn2hex", big_num, ret);
+	OpenSSL_free(big_num);
 
 	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
 	{
