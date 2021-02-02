@@ -33,19 +33,15 @@
 		printf("\n");											\
 	} while (0)
 
- #define DEBUG_BIGNUM2(strMsg, bn)								\
-	do {														\
-		if ((strMsg == NULL) || (bn == NULL))					\
-			break;												\
-		int index = 0, len = BN_num_bytes(bn);					\
-		if (len <= 0)											\
-			break;												\
-		unsigned char *ptr = OPENSSL_zalloc(len);				\
-		BN_bn2bin(bn, ptr);										\
-		printf("  [%05d] BIGNUM ", __LINE__);					\
-		printf("%s = [%d] ", strMsg, len);						\
-		for ( ; index < len ; index ++)							\
-			printf("%02x", ptr[index]);							\
-		printf("\n");											\
-		OPENSSL_free(ptr);										\
+ #define DEBUG_BIGNUM(strMsg, bn)									\
+	do {															\
+		if ((strMsg == NULL) || (bn == NULL))						\
+		{															\
+			fprintf(stdout, "  [%05d] BIGNUM is NULL", __LINE__);	\
+			break;													\
+		}															\
+		fprintf(stdout, "  [%05d] BIGNUM ", __LINE__);				\
+		fprintf(stdout, "%s = [%d] ", strMsg, len);					\
+		BN_print_fp(stdout, bn);									\
+		fprintf(stdout, "\n");										\
 	} while (0)

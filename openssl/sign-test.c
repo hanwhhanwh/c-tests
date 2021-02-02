@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	// free(*priv_der);
 	group = EC_KEY_get0_group(eckey);
 	priv_key = EC_KEY_get0_private_key(eckey);
-	DEBUG_BIGNUM2("priv_key", priv_key);
+	DEBUG_BIGNUM("priv_key", priv_key);
 
 	pub_key = EC_KEY_get0_public_key(eckey);
 	BN_CTX *ctx = NULL;
@@ -81,13 +81,11 @@ int main(int argc, char *argv[])
 
     BIGNUM *x = BN_new();
     BIGNUM *y = BN_new();
-
-    if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL)) {
-        BN_print_fp(stdout, x);
-        putc('\n', stdout);
-        BN_print_fp(stdout, y);
-        putc('\n', stdout);
-    }
+	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
+	{
+		DEBUG_BIGNUM("pub_key->x", x);
+		DEBUG_BIGNUM("pub_key->y", y);
+	}
 
 	ECParameters_print_fp(stdout, eckey);
 
