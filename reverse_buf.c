@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
 	unsigned char buf[512];
 	int index = 0, buflen = 512, count;
 
-	for ( ; index < buflen ; index ++);
+	for ( ; index < buflen ; index ++)
 		buf[index] = index;
 
-	DEBUG_PTR("buf", buf, 8);
+	DEBUG_PTR("buf", buf, 16);
 	revers_buf(buf, 8);
 	DEBUG_PTR("buf", buf, 8);
 	revers_buf(buf, 4);
