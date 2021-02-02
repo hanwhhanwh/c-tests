@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 
 	BN_dec2bn(&x, "1024");
 	DEBUG_BIGNUM("1024", x);
-	len = BN_num_bytes(x;
+	len = BN_num_bytes(x);
 	ret = BN_bn2lebinpad(x, digest, len);
 	DEBUG_PTR("1024 ptr", digest, ret);
 
