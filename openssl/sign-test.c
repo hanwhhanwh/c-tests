@@ -81,6 +81,10 @@ int main(int argc, char *argv[])
 
     BIGNUM *x = BN_new();
     BIGNUM *y = BN_new();
+
+	BN_dec2bn(&x, "1024");
+	DEBUG_BIGNUM("1024", x);
+
 	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
 	{
 		DEBUG_BIGNUM("pub_key->x", x);
