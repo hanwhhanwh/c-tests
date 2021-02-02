@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
 
 	BN_dec2bn(&x, "1024");
 	DEBUG_BIGNUM("1024", x);
-	BN_bn2lebinpad(x, digest, 8);
-	DEBUG_PTR("1024 ptr", digest, 8);
+	ret = BN_bn2lebinpad(x, digest, 8);
+	DEBUG_PTR("1024 ptr", digest, ret);
 
 	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
 	{
