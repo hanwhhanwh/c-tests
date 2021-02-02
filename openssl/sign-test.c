@@ -66,6 +66,11 @@ int main(int argc, char *argv[])
 	priv_key = EC_KEY_get0_private_key(eckey);
 	DEBUG_BIGNUM("priv_key", priv_key);
 
+	int privlen; unsigned char *priv = NULL;
+	privlen = EC_KEY_priv2buf(x, &priv);
+	DEBUG_PTR("priv", priv, privlen);
+	OPENSSL_clear_free(priv, privlen);
+
 	pub_key = EC_KEY_get0_public_key(eckey);
 	BN_CTX *ctx = NULL;
 	ctx = BN_CTX_new();
@@ -89,7 +94,7 @@ int main(int argc, char *argv[])
 	ret = BN_bn2lebinpad(x, digest, len);
 	DEBUG_PTR("1024 to BN_bn2lebinpad", digest, ret);
 	char *big_num = BN_bn2hex(x);
-	DEBUG_MSG("1024 to BN_bn2hex = %s", big_num);
+	DEBUG_MSG("1024 to BN_bn2hex = %s\n", big_num);
 	OPENSSL_free(big_num);
 
 	if (EC_POINT_get_affine_coordinates_GFp(group, pub_key, x, y, NULL))
