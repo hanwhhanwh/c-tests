@@ -20,7 +20,8 @@ TEST :
 #include "debug_utils.h"
 
 
-#define BUF_LEN				64;
+#define BUF_LEN				64
+
 
 int main(int argc, char *argv[])
 {
