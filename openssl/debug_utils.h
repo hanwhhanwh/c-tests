@@ -46,3 +46,27 @@
 		BN_print_fp(stdout, bn);									\
 		fprintf(stdout, "\n");										\
 	} while (0)
+
+
+int hex2bin(unsigned char *dest_buf, int buf_len, const char *hex_str)
+{
+	int str_len = strlen(hex_str);
+	if (str_len == 0)
+		return 0;
+
+	int count = 0;
+	int index = 0;
+	for ( ; count < buf_len ; index ++)
+	{
+		dest_buf[count] = ((hex_str[index] >= '0' && hex_str[index] <= '9') ? hex_str[index] - '0' : (hex_str[index] | 0x20) - 'a' + 10) << 4;
+		index ++;
+		if ( index >= str_len )
+		{
+			dest_buf[count] = 0;
+			break;
+		}
+		dest_buf[count] |= (hex_str[index] >= '0' && hex_str[index] <= '9') ? hex_str[index] - '0' : (hex_str[index] | 0x20) - 'a' + 10;
+		count ++;
+	}
+	return count;
+}
