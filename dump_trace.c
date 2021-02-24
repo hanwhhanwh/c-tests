@@ -8,6 +8,7 @@ reference:
 build:
 	gcc dump_trace.c -o dump_trace -fno-omit-frame-pointer -rdynamic
 */
+#include <stdio.h>
 #include <execinfo.h>
 #include <signal.h>
 
@@ -43,7 +44,7 @@ void dump_backtrace(void)
     for(s_backtrace_index = 0;s_backtrace_index < s_backtrace_size;s_backtrace_index++) {
         (void)fprintf(
             stderr,
-            "%02d - %p - %s\n",
+            "%02d - %010p - %s\n",
             s_backtrace_index + 1,
             s_backtrace_buffer[s_backtrace_index],
             (s_backtrace_symbols == ((char **)0)) ? "<unknown symbol>" : s_backtrace_symbols[s_backtrace_index]
@@ -66,7 +67,8 @@ void my_signal_handler(int s_signal)
 			break;
 	}
 
-	signal(s_signal, my_signal_handler); /* 자기자신의 Signal 을 재귀적으로 처리하기 위해서 */
+	// signal(s_signal, my_signal_handler); /* 자기자신의 Signal 을 재귀적으로 처리하기 위해서 */
+    exit(1);
 }
 
 
